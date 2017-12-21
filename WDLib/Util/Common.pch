@@ -1,0 +1,65 @@
+//
+//  Common.pch
+//  WDLib
+//
+//  Created by wandou on 19/12/2017.
+//  Copyright © 2017 wandou. All rights reserved.
+//
+
+#ifndef Common_pch
+#define Common_pch
+
+#import "MJRefresh.h"
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#pragma mark - ====宽高
+//基本宽高
+#define WD_SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define WD_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+#define WD_STATUS_HEIGHT 20.*WD_HEIGHT_BASE
+#define WD_NAVIGATION_HEIGHT 44.*WD_HEIGHT_BASE
+#define WD_SEGMENT_HEIGHT 44.*WD_HEIGHT_BASE
+#define WD_TABBAR_HEIGHT 49.*WD_HEIGHT_BASE
+//适配宽高
+#define kIphone6Height 667.0
+#define kIphone6Width 375.0
+#define WD_WIDTH_BASE (WD_SCREEN_WIDTH/kIphone6Width)
+#define WD_HEIGHT_BASE (WD_SCREEN_HEIGHT/kIphone6Height)
+
+#define kFit(x) (WD_SCREEN_WIDTH*((x)/kIphone6Width))
+#define MColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0f]
+#define TextSize kFit(16)
+
+#pragma mark - ====字体
+//普通体
+#define WD_FONTTSIZE(xx) [UIFont systemFontOfSize:WD_HEIGHT_BASE*xx]
+//粗体
+#define WD_BOLD_FONTTSIZE(xx) [UIFont boldSystemFontOfSize:WD_HEIGHT_BASE*xx]
+
+#pragma mark - ====为避免循环引用，弱化自身
+#define WeakSelf(weakSelf)  __weak __typeof(&*self)weakSelf = self;
+
+#pragma mark - ====日志
+
+#define CADEBUG 1
+#if CADEBUG
+#define DLog(FORMAT, ...) fprintf(stderr,"\nfunction:%s line:%d content:%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#else
+#define DLog(FORMAT, ...) nil
+
+#endif
+//版本号
+#define WD_VERSION [[[NSBundle mainBundle]infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+
+
+#define WD_BASE_URL @"http://10.229.255.31:8250/twms-hand/api"
+
+#pragma mark - ====库位管理选择项目
+
+typedef NS_ENUM(NSInteger, TransferType) {
+    TransferTypeBatch=2001,//批量转储
+    TransferTypeSingle,//单个转储
+};
+
+#endif /* Common_pch */
